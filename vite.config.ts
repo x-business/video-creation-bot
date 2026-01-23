@@ -3,6 +3,8 @@ import react from "@vitejs/plugin-react";
 import path from "path";
 import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
 
+// Note: Replit-specific plugins (cartographer, devBanner) only load when REPL_ID is set
+// This allows the same config to work in both Replit and local development
 export default defineConfig({
   plugins: [
     react(),

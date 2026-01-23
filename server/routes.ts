@@ -3,6 +3,7 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertVideoProjectSchema } from "@shared/schema";
 import OpenAI from "openai";
+import { registerHiggsFieldRoutes } from "./replit_integrations/higgs";
 
 const openai = new OpenAI({
   apiKey: process.env.AI_INTEGRATIONS_OPENAI_API_KEY,
@@ -137,6 +138,9 @@ Generate an authentic, relatable script that would work well for short-form vide
       res.status(500).json({ error: "Failed to generate script" });
     }
   });
+
+  // Register Higgs Field API routes
+  registerHiggsFieldRoutes(app);
 
   return httpServer;
 }
