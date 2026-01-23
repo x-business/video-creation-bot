@@ -1,0 +1,144 @@
+STEP-BY-STEP GUIDE: VIDEO EDITING WORKFLOW
+Tools Used
+Higgs Field – Generate AI video scenes and voice-over
+ElevenLabs – Voice Generation (2nd option)
+transitionalhooks.com – Generate high-engagement hooks
+CapCut – Edit and finalize the video
+
+Step 1: Define the Video Goal
+Before using any tool:
+Decide the platform (Reels, TikTok, Shorts)
+Confirm video length (e.g., 15-20 seconds)
+Identify the purpose (educational, explainer)
+Decide tone (professional, casual, energetic)
+
+Step 2: Generate the Hook (transitionalhooks.com) 
+Go to transitionalhooks.com
+Select a hook style that is engaging and attention-grabbing
+Choose a hook that runs between 5 and 10 seconds
+✅ This hook will be used as:
+Used at the start of the video to engage viewers right away. 
+Placed at the video’s opening to hook viewers instantly. 
+Step 3: Create Script using ChatGPT 
+Open ChatGPT 
+Generate a 2–3-line education-focused testimonial on MEDICAID.
+Key phrase: “For less than a dollar a day”
+Keyword: “Protection”
+Save it in a Word/Notepad file for later editing
+Sample
+“I work hard just to stay afloat, and Medicaid paperwork felt overwhelming. Freeman Filing helps simplify the process and keep me organized, for less than a dollar a day. Stay protected when it matters most.”
+
+
+
+Step 4: Generate Image, Video & Voice Using Higgs Field
+Open Higgs Field
+Image
+Create Image
+             
+Typing Area:
+
+Create Content:
+
+
+” A low-income earner in a simple, worn-down home, showing a simple living environment” (sample only)
+
+Generate:
+
+
+
+
+
+
+
+
+
+
+Save it  for later editing.
+
+Video
+
+
+Lipsync Studio:
+
+
+
+
+
+
+
+Setup:
+General
+
+
+Upload Image:
+
+
+
+
+Generate Audio:
+
+
+
+
+
+
+
+
+
+
+
+
+
+Enter the script previously generated in ChatGPT.
+Choose a voice that best matches the description of the image.
+Then Generate.
+Note: The script should be 10–20 seconds long. If it exceeds 20 seconds, rephrase it using ChatGPT. Split it into two parts since each video segment can only be 10 seconds. 
+
+Prompt:
+      (It tells the AI what scenes, actions, or visuals to create in the video.) 
+Sample Prompt:
+An elderly man with a solemn expression sits at a worn wooden table in a dim, aged kitchen. He folds his hands on the table, then slowly glances out the window where the faint view of a quiet street is visible. He takes a deep breath and exhales quietly, lost in thought. The camera starts with a tight close-up on his face, capturing his contemplative eyes, then slowly pulls back and pans to reveal the peeling walls, cracked paint, and worn furniture surrounding him, emphasizing the sense of time and memory in the room. The audio features soft, ambient creaks of an old house, subtle street sounds outside, and the faint rustle of the curtain in the breeze, enhancing the quiet, reflective atmosphere. 
+
+Model: Wan 2.5 Speak Fast
+(Apply this model to the Higgs field, or modify it if advised.)
+Duration: 10 sec.
+Resolution: 1080p
+Then Generate
+
+
+Save it for later editing.
+
+Step 5: Import Everything into CapCut
+Open CapCut
+Set the correct aspect ratio (usually 9:16)
+Import:
+Higgs Field video clips
+Hook reels
+Place voice-over on the main timeline
+
+Step 6: Create the Rough Cut
+Edit and combine the hooks smoothly within the video
+Remove unnecessary pauses
+Trim clips for pacing
+Ensure the hook appears in the first 3-5 seconds
+🎯 Focus on structure, not effects yet.
+
+Step 7: Audio & Visual Enhancement
+Adjust audio levels (voice louder than music)
+Add background music (if necessary)
+Apply basic color correction
+Ensure consistency across clips
+
+Step 8: Final Check & Export
+Watch the full video:
+Check proper framing and safe margin
+Ensure smooth, natural transitions between clips and hooks.
+Confirm branding consistency
+Export settings:
+Format: MP4
+Resolution: 1080 × 1920
+Name file properly:
+
+
+
+This is what our content creators are doing. I want to make this process into automated thing or bot. currently select hook and cupcut should be manually for now. 
