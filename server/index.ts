@@ -85,12 +85,15 @@ app.use((req, res, next) => {
   // importantly only setup vite in development and after
   // setting up all the other routes so the catch-all route
   // doesn't interfere with the other routes
-  if (process.env.NODE_ENV === "production") {
+  if (process.env.NODE_ENV === "production" && process.env.VERCEL !== "1") {
+    // Only serve static files if NOT on Vercel (Vercel handles static files automatically)
     serveStatic(app);
-  } else {
+  } else if (process.env.VERCEL !== "1") {
+    // Only setup Vite in local development (not on Vercel)
     const { setupVite } = await import("./vite");
     await setupVite(httpServer, app);
   }
+  // On Vercel, static files are served automatically, and API routes go to /api/index
 
   // ALWAYS serve the app on the port specified in the environment variable PORT
   // Default to 5000 if not specified.
