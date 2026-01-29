@@ -7,11 +7,11 @@ export async function registerHiggsFieldRoutes(app: Express): Promise<void> {
   let generateVideo: any;
   
   try {
-    const higgsClient = await import("../server/replit_integrations/higgs/client");
+    const higgsClient = await import("./higgs-client.js");
     generateImage = higgsClient.generateImage;
     generateVideo = higgsClient.generateVideo;
   } catch (err) {
-    console.warn("[Vercel] Could not import Higgsfield client:", err);
+    console.error("[Vercel] Could not import Higgsfield client:", err);
     // Fallback: provide stub functions
     generateImage = async () => {
       throw new Error("Higgsfield client not available");
