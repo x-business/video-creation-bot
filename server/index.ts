@@ -101,7 +101,13 @@ app.use((req, res, next) => {
   // This works better with VPNs and allows access from other devices on the network
   const host = "0.0.0.0";
   
-  httpServer.listen(port, host, () => {
-    log(`serving on http://localhost:${port} (accessible via VPN)`);
-  });
+  // Only start HTTP server if not running on Vercel (serverless)
+  if (process.env.VERCEL !== "1") {
+    httpServer.listen(port, host, () => {
+      log(`serving on http://localhost:${port} (accessible via VPN)`);
+    });
+  }
 })();
+
+// Export app for Vercel serverless functions
+export default app;
