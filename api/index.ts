@@ -1,8 +1,12 @@
 // Vercel serverless function entry point
 // This wraps the Express app for Vercel deployment
 
-// Import the Express app (it will initialize asynchronously)
-// The app is exported from server/index.ts after async initialization
+// Set VERCEL env var so server knows it's running on Vercel
+process.env.VERCEL = "1";
+
+// Import the Express app
+// The app initializes asynchronously in server/index.ts
+// Vercel will handle the async initialization
 import app from "../server/index";
 
 // Export the Express app as a serverless function
