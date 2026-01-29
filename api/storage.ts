@@ -1,7 +1,7 @@
 // Copy of server/storage.ts for Vercel deployment
 // Vercel can't import from ../server, so we need a copy in the api directory
 
-import { type User, type InsertUser, type VideoProject, type InsertVideoProject } from "../shared/schema";
+import { type User, type InsertUser, type VideoProject, type InsertVideoProject } from "../shared/schema.js";
 import { randomUUID } from "crypto";
 import fs from "fs";
 import path from "path";

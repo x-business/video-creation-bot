@@ -10,8 +10,8 @@ console.log("[Vercel] Initializing API handler...");
 // Import dependencies directly (Vercel will bundle these)
 import express from "express";
 import { createServer } from "http";
-import { storage } from "./storage";
-import { insertVideoProjectSchema } from "../shared/schema";
+import { storage } from "./storage.js";
+import { insertVideoProjectSchema } from "../shared/schema.js";
 import OpenAI from "openai";
 import multer from "multer";
 import path from "path";
@@ -22,7 +22,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Import Higgsfield routes from local file
-import { registerHiggsFieldRoutes } from "./higgs-routes";
+import { registerHiggsFieldRoutes } from "./higgs-routes.js";
 
 // Create Express app
 const app = express();
