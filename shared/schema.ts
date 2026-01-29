@@ -32,12 +32,19 @@ export const videoProjects = pgTable("video_projects", {
   keyword: text("keyword"),
   script: text("script"),
   hookGenerated: boolean("hook_generated").notNull().default(false),
+  hook: text("hook"), // User uploaded hook text
+  hookUrl: text("hook_url"), // URL to uploaded hook file (if any)
   imageGenerated: boolean("image_generated").notNull().default(false),
+  imageUrl: text("image_url"), // Generated image URL
+  imagePrompt: text("image_prompt"), // Original image prompt from script
+  enhancedImagePrompt: text("enhanced_image_prompt"), // AI-enhanced image prompt
   videoGenerated: boolean("video_generated").notNull().default(false),
-  audioGenerated: boolean("audio_generated").notNull().default(false),
-  editingComplete: boolean("editing_complete").notNull().default(false),
-  imagePrompt: text("image_prompt"),
+  videoUrl: text("video_url"), // Generated video URL
   videoPrompt: text("video_prompt"),
+  audioGenerated: boolean("audio_generated").notNull().default(false),
+  audioUrl: text("audio_url"), // Generated audio URL
+  selectedVoiceId: text("selected_voice_id"), // Selected voice for audio/video
+  editingComplete: boolean("editing_complete").notNull().default(false),
   createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`).notNull(),
 });
 

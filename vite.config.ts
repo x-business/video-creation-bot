@@ -38,5 +38,13 @@ export default defineConfig({
       strict: true,
       deny: ["**/.*"],
     },
+    // Configure server to work with VPN
+    host: "0.0.0.0", // Allow connections from all network interfaces
+    strictPort: false, // Don't fail if port is already in use
+    // HMR configuration for VPN compatibility
+    hmr: {
+      protocol: "ws",
+      host: "localhost", // Use localhost for HMR client (works better with VPN)
+    },
   },
 });

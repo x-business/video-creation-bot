@@ -12,9 +12,11 @@ import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Separator } from "@/components/ui/separator";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
+import { InteractiveWorkflow } from "@/components/interactive-workflow";
 import type { VideoProject } from "@shared/schema";
 
 interface ProjectDetailDialogProps {
@@ -124,7 +126,7 @@ export function ProjectDetailDialog({ project, open, onOpenChange }: ProjectDeta
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
+      <DialogContent className="w-[95vw] sm:max-w-5xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <div className="flex items-center gap-2 flex-wrap">
             <Badge className={`${platformColors[localProject.platform]} text-white border-0`}>
@@ -254,57 +256,77 @@ export function ProjectDetailDialog({ project, open, onOpenChange }: ProjectDeta
 
           <Separator />
 
-          <div className="space-y-3">
-            <Label className="text-base font-semibold">Workflow Checklist</Label>
-            <p className="text-sm text-muted-foreground">
-              Track your progress through each step of the workflow.
-            </p>
-            <div className="space-y-3">
-              {checklistItems.map((item) => {
-                const Icon = item.icon;
-                const isChecked = localProject[item.key as keyof VideoProject] === true;
-                
-                return (
-                  <div
-                    key={item.key}
-                    className={`
-                      flex items-center justify-between p-3 rounded-md border
-                      ${isChecked ? "bg-primary/5 border-primary/20" : "bg-card"}
-                    `}
-                  >
-                    <div className="flex items-center gap-3">
-                      <Checkbox
-                        id={item.key}
-                        checked={isChecked}
-                        onCheckedChange={(checked) => 
-                          handleChecklistChange(item.key, checked as boolean)
-                        }
-                        data-testid={`checkbox-${item.key}`}
-                      />
-                      <Icon className={`h-4 w-4 ${isChecked ? "text-primary" : "text-muted-foreground"}`} />
-                      <Label
-                        htmlFor={item.key}
-                        className={`cursor-pointer ${isChecked ? "text-primary font-medium" : ""}`}
+          <Tabs defaultValue="workflow" className="w-full">
+            <TabsList className="grid w-full grid-cols-2">
+              <TabsTrigger value="workflow">Interactive Workflow</TabsTrigger>
+              <TabsTrigger value="checklist">Checklist View</TabsTrigger>
+            </TabsList>
+            <TabsContent value="workflow" className="mt-4">
+              <InteractiveWorkflow
+                project={localProject}
+                onUpdate={(updates) => {
+                  setLocalProject({ ...localProject, ...updates });
+                  updateMutation.mutate({
+                    id: localProject.id,
+                    updates,
+                  });
+                }}
+              />
+            </TabsContent>
+            <TabsContent value="checklist" className="mt-4">
+              <div className="space-y-3">
+                <Label className="text-base font-semibold">Workflow Checklist</Label>
+                <p className="text-sm text-muted-foreground">
+                  Track your progress through each step of the workflow.
+                </p>
+                <div className="space-y-3">
+                  {checklistItems.map((item) => {
+                    const Icon = item.icon;
+                    const isChecked = localProject[item.key as keyof VideoProject] === true;
+                    
+                    return (
+                      <div
+                        key={item.key}
+                        className={`
+                          flex items-center justify-between p-3 rounded-md border
+                          ${isChecked ? "bg-primary/5 border-primary/20" : "bg-card"}
+                        `}
                       >
-                        {item.label}
-                      </Label>
-                    </div>
-                    {item.link && (
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        asChild
-                      >
-                        <a href={item.link} target="_blank" rel="noopener noreferrer">
-                          <ExternalLink className="h-4 w-4" />
-                        </a>
-                      </Button>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
+                        <div className="flex items-center gap-3">
+                          <Checkbox
+                            id={item.key}
+                            checked={isChecked}
+                            onCheckedChange={(checked) => 
+                              handleChecklistChange(item.key, checked as boolean)
+                            }
+                            data-testid={`checkbox-${item.key}`}
+                          />
+                          <Icon className={`h-4 w-4 ${isChecked ? "text-primary" : "text-muted-foreground"}`} />
+                          <Label
+                            htmlFor={item.key}
+                            className={`cursor-pointer ${isChecked ? "text-primary font-medium" : ""}`}
+                          >
+                            {item.label}
+                          </Label>
+                        </div>
+                        {item.link && (
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            asChild
+                          >
+                            <a href={item.link} target="_blank" rel="noopener noreferrer">
+                              <ExternalLink className="h-4 w-4" />
+                            </a>
+                          </Button>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </TabsContent>
+          </Tabs>
         </div>
       </DialogContent>
     </Dialog>

@@ -10,10 +10,22 @@ const viteLogger = createLogger();
 
 export async function setupVite(server: Server, app: Express) {
   try {
+    // Get the port from environment or default to 5000
+    const port = parseInt(process.env.PORT || "5000", 10);
+    
     const serverOptions = {
       middlewareMode: true,
-      hmr: { server, path: "/vite-hmr" },
+      hmr: {
+        server,
+        path: "/vite-hmr",
+        // Configure HMR to work with VPN by using the correct host
+        // Use localhost for HMR client connection (works with VPN)
+        clientPort: port,
+      },
+      // Allow all hosts to work with VPN
       allowedHosts: true as const,
+      // Explicitly set host to work with VPN
+      host: "0.0.0.0",
     };
 
     const vite = await createViteServer({

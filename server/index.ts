@@ -17,13 +17,17 @@ declare module "http" {
 
 app.use(
   express.json({
+    limit: "50mb", // Increased limit for file uploads (base64 encoded files can be large)
     verify: (req, _res, buf) => {
       req.rawBody = buf;
     },
   }),
 );
 
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: false, limit: "50mb" }));
+
+// Serve uploaded files
+app.use("/uploads", express.static("uploads"));
 
 export function log(message: string, source = "express") {
   const formattedTime = new Date().toLocaleTimeString("en-US", {
@@ -93,11 +97,11 @@ app.use((req, res, next) => {
   // This serves both the API and the client.
   const port = parseInt(process.env.PORT || "5000", 10);
   
-  // Use localhost for local development (works on all platforms)
-  // Use 0.0.0.0 for production/deployment (allows external connections)
-  const host = process.env.NODE_ENV === "production" ? "0.0.0.0" : "localhost";
+  // Use 0.0.0.0 to allow connections from VPN and all network interfaces
+  // This works better with VPNs and allows access from other devices on the network
+  const host = "0.0.0.0";
   
   httpServer.listen(port, host, () => {
-    log(`serving on http://${host}:${port}`);
+    log(`serving on http://localhost:${port} (accessible via VPN)`);
   });
 })();

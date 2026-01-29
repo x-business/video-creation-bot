@@ -54,14 +54,15 @@ Then edit the `.env` file and configure the following:
   - Default: `https://api.openai.com/v1`
   - Usually you can leave this as-is unless using a proxy
 
-#### Optional - Higgs Field API (for image/video/voice generation):
-- `HIGGS_FIELD_API_KEY`: Your Higgs Field API key
-  - Get one from: https://higgsfield.ai (or your Higgs Field provider)
-  - Required for image, video, and voice generation features
+#### Optional - Higgsfield API (for image/video generation):
+- `HF_CREDENTIALS`: Your Higgsfield credentials in format `KEY_ID:KEY_SECRET`
+  - Get your credentials from: https://platform.higgsfield.ai
+  - Required for image and video generation features
+  - Example: `HF_CREDENTIALS=your_key_id:your_key_secret`
 
-- `HIGGS_FIELD_BASE_URL`: Higgs Field API base URL
-  - Default: `https://api.higgsfield.ai`
-  - Update if using a different endpoint
+- **Alternative**: Use separate environment variables:
+  - `HF_API_KEY`: Your Higgsfield API key ID
+  - `HF_API_SECRET`: Your Higgsfield API secret
 
 #### Optional:
 - `PORT`: Server port (defaults to 5000 if not set)
