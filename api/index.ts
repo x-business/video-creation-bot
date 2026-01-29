@@ -8,23 +8,35 @@ process.env.NODE_ENV = process.env.NODE_ENV || "production";
 // Import the app initialization function
 import { initializeApp } from "../server/index";
 
-// Initialize the app and export it
-// This ensures all routes are registered before the handler is used
+// Initialize the app once and cache it
 let appInstance: any = null;
 let initPromise: Promise<any> | null = null;
 
 async function getApp() {
   if (!initPromise) {
-    initPromise = initializeApp();
-    appInstance = await initPromise;
-  } else if (!appInstance) {
+    initPromise = initializeApp().catch((err) => {
+      console.error("Failed to initialize app:", err);
+      initPromise = null; // Reset on error so we can retry
+      throw err;
+    });
+  }
+  
+  if (!appInstance) {
     appInstance = await initPromise;
   }
+  
   return appInstance;
 }
 
 // Vercel serverless function handler
 export default async function handler(req: any, res: any) {
-  const app = await getApp();
-  return app(req, res);
+  try {
+    const app = await getApp();
+    return app(req, res);
+  } catch (error: any) {
+    console.error("Handler error:", error);
+    if (!res.headersSent) {
+      res.status(500).json({ error: "Internal server error", message: error.message });
+    }
+  }
 }
