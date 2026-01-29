@@ -66,7 +66,8 @@ app.use((req, res, next) => {
   next();
 });
 
-(async () => {
+// Initialize the app asynchronously
+export async function initializeApp() {
   await registerRoutes(httpServer, app);
 
   app.use((err: any, _req: Request, res: Response, next: NextFunction) => {
@@ -110,7 +111,17 @@ app.use((req, res, next) => {
       log(`serving on http://localhost:${port} (accessible via VPN)`);
     });
   }
-})();
 
-// Export app for Vercel serverless functions
+  return app;
+}
+
+// Initialize app immediately for local development
+if (process.env.VERCEL !== "1") {
+  initializeApp().catch((err) => {
+    console.error("Failed to initialize app:", err);
+    process.exit(1);
+  });
+}
+
+// Export app for Vercel serverless functions (will be initialized by api/index.ts)
 export default app;

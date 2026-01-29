@@ -11,6 +11,10 @@
     {
       "source": "/uploads/(.*)",
       "destination": "/api/index"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }
