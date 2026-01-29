@@ -22,7 +22,12 @@ async function getApp() {
   }
   
   if (!appInstance) {
-    appInstance = await initPromise;
+    try {
+      appInstance = await initPromise;
+    } catch (err) {
+      console.error("Error getting app instance:", err);
+      throw err;
+    }
   }
   
   return appInstance;
@@ -32,11 +37,16 @@ async function getApp() {
 export default async function handler(req: any, res: any) {
   try {
     const app = await getApp();
-    return app(req, res);
+    // Call the Express app handler
+    app(req, res);
   } catch (error: any) {
     console.error("Handler error:", error);
     if (!res.headersSent) {
-      res.status(500).json({ error: "Internal server error", message: error.message });
+      res.status(500).json({ 
+        error: "Internal server error", 
+        message: error?.message || "Unknown error",
+        stack: process.env.NODE_ENV === "development" ? error?.stack : undefined
+      });
     }
   }
 }
