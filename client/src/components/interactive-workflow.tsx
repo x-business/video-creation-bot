@@ -39,7 +39,9 @@ export function InteractiveWorkflow({ project, onUpdate }: InteractiveWorkflowPr
       onUpdate({ hookGenerated: true });
     }
     
-    if (!project.script) {
+    // Only auto-navigate to script step if no script AND no image prompt exists
+    // This allows users to skip script generation if they have their own prompts
+    if (!project.script && !project.imagePrompt && !project.imageGenerated) {
       setCurrentStep("script");
     } else if (!project.imageGenerated) {
       setCurrentStep("image");
@@ -246,7 +248,8 @@ export function InteractiveWorkflow({ project, onUpdate }: InteractiveWorkflowPr
   const canProceedToNext = () => {
     switch (currentStep) {
       case "script":
-        return !!project.script;
+        // Allow proceeding even without script - script generation is optional
+        return true;
       case "image":
         return project.imageGenerated;
       // Video step disabled
@@ -297,23 +300,36 @@ export function InteractiveWorkflow({ project, onUpdate }: InteractiveWorkflowPr
                   </Button>
                 </div>
               ) : (
-                <Button
-                  onClick={() => generateScriptMutation.mutate()}
-                  disabled={generateScriptMutation.isPending}
-                  className="w-full"
-                >
-                  {generateScriptMutation.isPending ? (
-                    <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      Generating...
-                    </>
-                  ) : (
-                    <>
-                      <Wand2 className="mr-2 h-4 w-4" />
-                      Generate Script with AI
-                    </>
-                  )}
-                </Button>
+                <div className="space-y-2">
+                  <Button
+                    onClick={() => generateScriptMutation.mutate()}
+                    disabled={generateScriptMutation.isPending}
+                    className="w-full"
+                  >
+                    {generateScriptMutation.isPending ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        Generating...
+                      </>
+                    ) : (
+                      <>
+                        <Wand2 className="mr-2 h-4 w-4" />
+                        Generate Script with AI
+                      </>
+                    )}
+                  </Button>
+                  <Button
+                    onClick={() => setCurrentStep("image")}
+                    variant="outline"
+                    className="w-full"
+                  >
+                    Skip Script Generation
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                  <p className="text-xs text-muted-foreground text-center">
+                    You can skip this step if you already have a script or want to generate images directly.
+                  </p>
+                </div>
               )}
             </CardContent>
           </Card>
